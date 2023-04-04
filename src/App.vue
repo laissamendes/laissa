@@ -14,6 +14,7 @@ const estado = ref("")
 const hobbies = ref("")
 const ling_programacao = ref("")
 const biografia = ref("")
+const imagem = ref("")
 </script>
 
 <template>
@@ -97,6 +98,13 @@ const biografia = ref("")
   <h4>Insira uma Biografia:</h4>
   <textarea v-model="biografia"></textarea>
 </div>
+<div>
+  <h3>Escolha sua nova foto de perfil</h3>
+  <input type="hidden" v-model="imagem" />
+
+<input type="file" />
+</div>
+
 <button type="submit">Enviar</button>
 </form>
   </div>
@@ -112,5 +120,6 @@ div{
   border-color: rgb(70, 69, 69);
   border-style: solid;
   color: white;
+  padding: 10px;
 }
 </style>
