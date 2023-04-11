@@ -82,7 +82,7 @@ function confirmacao() {
         <input
           type="text"
           v-model="endereco_rua"
-          v-on:keypress="enviar = false"
+          v-on:keypress="enviar = false" required
           placeholder="Digite sua rua..."
         />
       </div>
@@ -90,7 +90,7 @@ function confirmacao() {
         <input
           type="number"
           v-model="endereco_numero"
-          v-on:keypress="enviar = false"
+          v-on:keypress="enviar = false" required
           min="1"
           placeholder="Número da sua casa..."
         />
@@ -99,7 +99,7 @@ function confirmacao() {
         <input
           type="text"
           v-model="endereco_bairro"
-          v-on:keypress="enviar = false"
+          v-on:keypress="enviar = false" required
           placeholder="Digite seu bairro..."
         />
       </div>
@@ -107,13 +107,13 @@ function confirmacao() {
         <input
           type="text"
           v-model="cidade"
-          v-on:keypress="enviar = false"
+          v-on:keypress="enviar = false" required
           placeholder="Digite sua cidade..."
         />
       </div>
       <div class="estado">
         <h4>Insira seu estado:</h4>
-        <select v-model="estado" v-on:keypress="enviar = false">
+        <select v-model="estado" v-on:keypress="enviar = false" required>
           <option value="AC">Acre</option>
           <option value="AL">Alagoas</option>
           <option value="AP">Amapá</option>
