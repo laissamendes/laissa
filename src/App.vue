@@ -27,6 +27,16 @@ function confirmacao() {
     return false
   }
 }
+
+function handleFileUpload(e) {
+  const target = e.target
+  if (target && target.files) {
+    const file = target.files[0]
+    console.log(file)
+    imagem.value = URL.createObjectURL(file)
+  }
+}
+
 </script>
 
 <template>
@@ -82,7 +92,7 @@ function confirmacao() {
         <input
           type="text"
           v-model="endereco_rua"
-          v-on:keypress="enviar = false" required
+          v-on:keypress="enviar = false"
           placeholder="Digite sua rua..."
         />
       </div>
@@ -90,7 +100,7 @@ function confirmacao() {
         <input
           type="number"
           v-model="endereco_numero"
-          v-on:keypress="enviar = false" required
+          v-on:keypress="enviar = false"
           min="1"
           placeholder="Número da sua casa..."
         />
@@ -99,7 +109,7 @@ function confirmacao() {
         <input
           type="text"
           v-model="endereco_bairro"
-          v-on:keypress="enviar = false" required
+          v-on:keypress="enviar = false"
           placeholder="Digite seu bairro..."
         />
       </div>
@@ -107,13 +117,13 @@ function confirmacao() {
         <input
           type="text"
           v-model="cidade"
-          v-on:keypress="enviar = false" required
+          v-on:keypress="enviar = false"
           placeholder="Digite sua cidade..."
         />
       </div>
       <div class="estado">
         <h4>Insira seu estado:</h4>
-        <select v-model="estado" v-on:keypress="enviar = false" required>
+        <select v-model="estado" v-on:keypress="enviar = false">
           <option value="AC">Acre</option>
           <option value="AL">Alagoas</option>
           <option value="AP">Amapá</option>
@@ -157,36 +167,42 @@ function confirmacao() {
       </div>
       <div>
         <h3>Escolha sua nova foto de perfil</h3>
-        <input type="hidden" v-model="imagem" />
-        <input type="file" />
+        
+        <input
+          type="file"
+          id="imagem"
+          @change="handleFileUpload($event)"
+        />      
       </div>
       <button type="submit">Enviar</button>
     </form>
-    <p>{{ msgErro }}</p>
+    <div id="msgErro"><p>{{ msgErro }}</p></div>
   </div>
 
   <div v-if="enviar" id="editado">
     <h1>Perfil Atualizado:</h1>
-    <div class="img_atual"><img src="{{ imagem }}" alt="" /></div>
+    <div class="img_atual">
+      <img :src="imagem" alt="" />
+    </div>
     <div class="nome_atual">
       <p>{{ nome }}</p>
     </div>
     <div class="dt_nascimento-atualizado">
-      <p>{{ dtNascimento }}</p>
+      <p>{{ dtNascimento.substr(8,2)+"/"+dtNascimento.substr(5,2)+"/"+dtNascimento.substr(0,4) }}</p>
     </div>
     <div class="email-atual">
       <p>{{ email }}</p>
     </div>
     <div class="senha-atual"></div>
-    <div class="endereco-atual">
+    <div class="endereco-atual" v-if="endereco_rua!=''.trim() && endereco_numero!=''.trim() && endereco_bairro!=''.trim() && cidade!=''.trim() && estado!=''.trim()">
       <p>
         Endereço: {{ endereco_rua }}, {{ endereco_numero }},{{ endereco_bairro }}, {{ cidade }},
         {{ estado }}
       </p>
     </div>
-    <div class="hoobie_atualizado">Hoobie(s): {{ hobbies }}</div>
-    <div class="ling_atualizada">Linguagem(s) de Programação: {{ ling_programacao }}</div>
-    <div class="bio-atualizada">Biografia: {{ biografia }}</div>
+    <div class="hoobie_atualizado" v-if="hobbies!=''.trim()">Hoobie(s): {{ hobbies }}</div>
+    <div class="ling_atualizada" v-if="ling_programacao!=''.trim()">Linguagem(s) de Programação: {{ ling_programacao }}</div>
+    <div class="bio-atualizada" v-if="biografia!=''.trim()">Biografia: {{ biografia }}</div>
   </div>
 </template>
 
@@ -201,6 +217,9 @@ div {
   border-style: solid;
   color: white;
   padding: 10px;
+  box-shadow: 5px 5px 20px black;
+  width: 500px;
+  font-size: 20px;
 }
 #editor {
   background-color: rgba(169, 169, 169, 0.842);
@@ -209,9 +228,34 @@ div {
   border-style: solid;
   color: white;
   padding: 10px;
+  box-shadow: 5px 5px 20px black;
 }
-img {
-  width: 100px;
-  height: 100px;
+.img_atual {
+  width: '80%';
+  display: flex;
+  justify-content: center;
 }
+
+.img_atual img {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+}
+#msgErro{
+  color: black;
+  background-color: rgba(255, 255, 255, 0.692);
+  border-radius: 5px;
+  text-align: center;
+  box-shadow: 2px 2px 10px black;
+}
+button{
+  border-color: white;
+  color: white;
+  background-color: rgb(109, 109, 109);
+}
+button:hover{
+  box-shadow: 1px 1px 5px black;
+  background-color: rgb(82, 81, 81);
+}
+
 </style>
